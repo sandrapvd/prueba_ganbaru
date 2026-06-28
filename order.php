@@ -25,7 +25,7 @@ final class CrmOrderImporter
 
         //Traemos los pedidos actuales del json:
         
-        $orders = $this->source->fetchOrders(new DateTimeImmutable);
+        $orders = $this->source->fetchOrders($since);
         
         //var_dump($orders);
 
@@ -38,8 +38,19 @@ final class CrmOrderImporter
                 //Extraemos los datos de lines ya que suponen un array independiente.
                 $lines = [];
 
+                //Validamos que todos los campos existan:
+
+
                 if ($orderJson['lines'] !== null) {
                     foreach ($orderJson['lines'] as $line) {
+                        if (
+                            empty($line['sku']) ||
+                            empty($line['qty']) ||
+                            empty($line['unit_price'])
+                        ) {
+                            throw new Exception('Invalid order line');
+                        }
+
                         $lines[] = new OrderLine(
                             $line['sku'],
                             $line['qty'],
@@ -49,6 +60,19 @@ final class CrmOrderImporter
                 }
                 else { //Contolamos que si hay elementos vacíos en lines salte una excepción
                     throw new Exception('Order without lines');
+                }
+
+                //Validamos que no haya campos vacios, si no los evaluamos como skipped:
+
+                if (
+                    empty($orderJson['order_ref']) ||
+                    empty($orderJson['customer']['email']) ||
+                    empty($orderJson['customer']['name']) ||
+                    empty($orderJson['created_at']) ||
+                    empty($orderJson['status'])
+                ) {
+                    $result->skipped++;
+                    continue;
                 }
 
                 //Creamos un objeto Order con los elementos vacíos del array:
