@@ -26,3 +26,7 @@
 * Ejecutamos sobre el fichero principal order.php
 
     php init.php
+
+
+
+<em> Respuestas al cuestionario </em>
