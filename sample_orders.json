@@ -1,0 +1,26 @@
+[
+    {
+        "order_ref": "CRM-10231",
+        "customer": { "email": "ana@example.com", "name": "Ana Ruiz" },
+        "created_at": "2026-06-20T10:14:00Z",
+        "status": "paid",
+        "lines": [
+            { "sku": "AB-1", "qty": 2, "unit_price": 12.50 },
+            { "sku": "CD-9", "qty": 1, "unit_price": 40.00 }
+        ]
+    },
+    { 
+        "order_ref": "CRM-10231",
+        "customer": { "email": "ana@example.com", "name": "Ana Ruiz" },
+        "created_at": "2026-06-20T10:14:00Z",
+        "status": "paid",
+        "lines": [ { "sku": "AB-1", "qty": 2, "unit_price": 12.50 } ]
+    },
+    { 
+        "order_ref": "CRM-10232",
+        "customer": { "email": "luis@example.com", "name": "Luis Gil" },
+        "created_at": "2026-06-21T09:00:00Z",
+        "status": "pending",
+        "lines": null
+    }
+]
